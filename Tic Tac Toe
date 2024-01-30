@@ -1,0 +1,126 @@
+User
+import tkinter as tk 
+from tkinter import messagebox
+
+def specific_buttons(row, column, new_text):
+    buttons[row][column].config(text = new_text)
+
+def reset():
+    for i in range(3):
+        for j in range(3):
+            buttons[i][j].config(text = " ")
+    count.clear()
+
+
+
+   
+def click_reaction(row, column):
+    
+    if buttons[row][column].config("text")[-1] == " ":
+        if (len(count) % 2 == 0):
+            buttons[row][column].config(text = "X") 
+            count.append(1)
+        elif (len(count) % 2 != 0):
+            buttons[row][column].config(text = "O")
+            count.append(1)
+    
+               
+    else:
+        ()
+    if (
+        (buttons[0][0]["text"] == buttons[0][1]["text"] == buttons[0][2]["text"] == "X") or
+        (buttons[1][0]["text"] == buttons[1][1]["text"] == buttons[1][2]["text"] == "X") or
+        (buttons[2][0]["text"] == buttons[2][1]["text"] == buttons[2][2]["text"] == "X") or
+        (buttons[0][0]["text"] == buttons[1][0]["text"] == buttons[2][0]["text"] == "X") or
+        (buttons[0][1]["text"] == buttons[1][1]["text"] == buttons[2][1]["text"] == "X") or
+        (buttons[0][2]["text"] == buttons[1][2]["text"] == buttons[2][2]["text"] == "X") or
+        (buttons[0][0]["text"] == buttons[1][1]["text"] == buttons[2][2]["text"] == "X") or
+        (buttons[0][2]["text"] == buttons[1][1]["text"] == buttons[2][0]["text"] == "X")
+    ):
+        messagebox.showinfo("Winner", "Player X wins!")
+        reset()
+
+    elif (
+        (buttons[0][0]["text"] == buttons[0][1]["text"] == buttons[0][2]["text"] == "O") or
+        (buttons[1][0]["text"] == buttons[1][1]["text"] == buttons[1][2]["text"] == "O") or
+        (buttons[2][0]["text"] == buttons[2][1]["text"] == buttons[2][2]["text"] == "O") or
+        (buttons[0][0]["text"] == buttons[1][0]["text"] == buttons[2][0]["text"] == "O") or
+        (buttons[0][1]["text"] == buttons[1][1]["text"] == buttons[2][1]["text"] == "O") or
+        (buttons[0][2]["text"] == buttons[1][2]["text"] == buttons[2][2]["text"] == "O") or
+        (buttons[0][0]["text"] == buttons[1][1]["text"] == buttons[2][2]["text"] == "O") or
+        (buttons[0][2]["text"] == buttons[1][1]["text"] == buttons[2][0]["text"] == "O")
+    ):
+        messagebox.showinfo("Winner", "Player O wins!")
+        reset()
+    elif all(button["text"] != " " for row_buttons in buttons for button in row_buttons):
+        messagebox.showinfo("Draw", "It's a draw!")
+        
+
+count= []
+                                                                                                      
+    
+
+window = tk.Tk()
+window.title("tic tac toe")
+
+
+
+frame_1 = tk.Frame(bg="#A9D0F5")
+label_1a = tk.Label(master=frame_1,
+                    text = "Tic Tac Toe",                   
+                    fg= "white",
+                    bg="#0404B4",
+                    font= ("Arial", 30),
+                    relief = tk.RAISED,
+                    borderwidth=10,
+                    width= 15
+                    )
+
+
+
+frame_2 = tk.Frame(bg="#A9D0F5")
+
+buttons = []
+for i in range(3):
+    row_buttons = []
+    for j in range(3):
+        button = tk.Button(
+            width= 10,
+            height= 3,
+            master=frame_2,
+            relief = tk.RAISED,
+            borderwidth=10,
+            text =" ",
+            font= ("Arial", 17),
+            command = lambda row=i, column=j: click_reaction(row, column)
+            )
+        button.grid(row=i, column=j)
+        row_buttons.append(button)
+    buttons.append(row_buttons)
+ 
+
+
+frame_3 = tk.Frame(width= 15,
+                   bg= "#0404B4",
+                   relief= tk.RAISED,
+                   borderwidth= 10)
+button2 = tk.Button(
+    text = "reset",
+    master= frame_3,
+    command = reset)
+
+
+label_1a.pack() 
+frame_1.pack(fill=tk.BOTH)
+frame_2.pack(fill= tk.BOTH, expand=True)
+frame_3.pack()
+button2.pack()
+
+
+
+
+
+
+
+
+window.mainloop() 
